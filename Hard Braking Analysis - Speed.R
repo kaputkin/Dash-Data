@@ -40,6 +40,8 @@ All_IDs <- read.csv("All_IDS.csv")
 unique(HardBrakes$id)    
 
 HardBrakesID <- merge(x=HardBrakes, y=All_IDs, by="id",all.x = TRUE)
+HardBrakesID <- HardBrakesID[c(1)]
+HardBrakesID <- as.data.frame(unique(HardBrakes$id))
 
 Cars <-aggregate(HardBrakesID, by=list(HardBrakesID$vehiclemake,HardBrakesID$vehiclemodel), 
                     FUN=NROW)
@@ -71,3 +73,6 @@ T50 <- read.csv("Total_50s.csv")
 Total_Driving <- rbind(T15,T20,T25,T30,T35,T40,T45,T50)
 
 unique(Total_Driving$id)
+
+#get unique IDs that aren't in speeding or hard braking
+SafeIDs <- All_IDs[which(!All_IDs %in% HardBrakesID)]
