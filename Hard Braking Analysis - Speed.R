@@ -1,4 +1,5 @@
 setwd("/Users/mac/Desktop/Dash")
+setwd("/Users/mac/Desktop/Dash/data")
 library('dplyr')
 s
 #import data
@@ -45,8 +46,28 @@ Cars <-aggregate(HardBrakesID, by=list(HardBrakesID$vehiclemake,HardBrakesID$veh
 Cars <- Cars[c(1,2,3)]
 write.csv(Cars, "Hard Brakes - Car.csv")      
 
-
+#aggregate by driver UD
 Driver <-aggregate(HardBrakesID, by=list(HardBrakesID$id), 
                  FUN=NROW)
 Driver <- Driver[c(1,2)]
-write.csv(Driver, "Hard Brakes - Driver.csv")      
+write.csv(Driver, "Hard Brakes - Driver.csv")   
+
+#Get speeding
+TotalSpeeders <- read.csv("Total_Speeders.csv") 
+SpeedIDs <- unique(TotalSpeeders$id)
+SpeedingIDs <- as.data.frame(SpeedIDs)
+rm(SpeedIDs)
+
+#get all data
+T15 <- read.csv("Total_15s.csv") 
+T20 <- read.csv("Total_20s.csv") 
+T25 <- read.csv("Total_25s.csv") 
+T30 <- read.csv("Total_30s.csv") 
+T35 <- read.csv("Total_35s.csv") 
+T40 <- read.csv("Total_40s.csv") 
+T45 <- read.csv("Total_45s.csv") 
+T50 <- read.csv("Total_50s.csv") 
+
+Total_Driving <- rbind(T15,T20,T25,T30,T35,T40,T45,T50)
+
+unique(Total_Driving$id)
